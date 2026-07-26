@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventPro – Discover & Book Amazing Events</title>
+  <meta name="description" content="EventPro is India's #1 event discovery and ticket booking platform. Find concerts, tech talks, workshops and more." />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/home.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo">Event<span>Pro</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="speakers.html">Speakers</a></li>
+    <li><a href="venues.html">Venues</a></li>
+  </ul>
+  <div class="nav-actions">
+    <span class="nav-user-name" id="navUserName" style="display:none"></span>
+    <a href="login.html" class="btn btn-outline btn-sm" id="navLoginBtn">Log In</a>
+    <a href="register.html" class="btn btn-primary btn-sm" id="navRegisterBtn">Sign Up</a>
+    <a href="dashboard.html" class="btn btn-primary btn-sm" id="navDashBtn" style="display:none">Dashboard</a>
+    <button class="btn btn-outline btn-sm" id="navLogoutBtn" style="display:none" onclick="logout()">Logout</button>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content animate-fadeInUp">
+    <div class="hero-badge">🎉 500+ Events Happening This Month</div>
+    <h1 class="hero-title">
+      Your Next Unforgettable<br>
+      <span class="gradient-text">Experience Awaits</span>
+    </h1>
+    <p class="hero-desc">Discover world-class events, book tickets in seconds, and create memories that last a lifetime. From tech summits to cultural festivals.</p>
+    <div class="hero-actions">
+      <a href="events.html" class="btn btn-primary btn-lg">Explore Events 🚀</a>
+      <a href="register.html" class="btn btn-outline btn-lg">Get Started Free</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat-item">
+        <div class="hero-stat-num" id="statEvents">0<span>+</span></div>
+        <div class="hero-stat-label">Events Hosted</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num" id="statUsers">0<span>K+</span></div>
+        <div class="hero-stat-label">Happy Attendees</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num" id="statCities">0<span>+</span></div>
+        <div class="hero-stat-label">Cities Covered</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num" id="statSpeakers">0<span>+</span></div>
+        <div class="hero-stat-label">Expert Speakers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE STRIP -->
+<div class="marquee-strip">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="marquee-item"><span class="marquee-dot">●</span> Technology</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> Business</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> Workshops</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> Leadership</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> Music & Arts</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> Health & Wellness</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> Startup Summits</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> AI & ML</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> Technology</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> Business</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> Workshops</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> Leadership</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> Music & Arts</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> Health & Wellness</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> Startup Summits</span>
+    <span class="marquee-item"><span class="marquee-dot">●</span> AI & ML</span>
+  </div>
+</div>
+
+<!-- FEATURED EVENTS -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-label">🔥 Trending Now</div>
+    <h2 class="section-title">Featured <span>Events</span></h2>
+    <p class="section-desc">Hand-picked events you don't want to miss</p>
+  </div>
+  <div class="events-grid" id="featuredEvents">
+    <div class="spinner"></div>
+  </div>
+  <div style="text-align:center; margin-top:40px;">
+    <a href="events.html" class="btn btn-outline btn-lg">View All Events →</a>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section" style="padding-top:0">
+  <div class="section-header">
+    <div class="section-label">Browse By</div>
+    <h2 class="section-title">Event <span>Categories</span></h2>
+    <p class="section-desc">Find events that match your interests</p>
+  </div>
+  <div class="categories-grid">
+    <a href="events.html?category=Technology" class="category-card">
+      <div class="category-icon">💻</div>
+      <div class="category-name">Technology</div>
+      <div class="category-count">AI, Cloud, Dev, Web3</div>
+    </a>
+    <a href="events.html?category=Business" class="category-card">
+      <div class="category-icon">📈</div>
+      <div class="category-name">Business</div>
+      <div class="category-count">Startups, Finance, Marketing</div>
+    </a>
+    <a href="events.html?category=Workshop" class="category-card">
+      <div class="category-icon">🔧</div>
+      <div class="category-name">Workshops</div>
+      <div class="category-count">Hands-on Learning</div>
+    </a>
+    <a href="events.html?category=Leadership" class="category-card">
+      <div class="category-icon">🏆</div>
+      <div class="category-name">Leadership</div>
+      <div class="category-count">Inspire & Grow</div>
+    </a>
+    <a href="events.html?category=Music" class="category-card">
+      <div class="category-icon">🎵</div>
+      <div class="category-name">Music & Arts</div>
+      <div class="category-count">Concerts, Performances</div>
+    </a>
+    <a href="events.html?category=Health" class="category-card">
+      <div class="category-icon">💚</div>
+      <div class="category-name">Health</div>
+      <div class="category-count">Wellness, Yoga, Fitness</div>
+    </a>
+    <a href="events.html?category=Education" class="category-card">
+      <div class="category-icon">📚</div>
+      <div class="category-name">Education</div>
+      <div class="category-count">Seminars, Conferences</div>
+    </a>
+    <a href="events.html" class="category-card">
+      <div class="category-icon">✨</div>
+      <div class="category-name">All Events</div>
+      <div class="category-count">View everything</div>
+    </a>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" style="background: var(--bg-800);">
+  <div class="section-header">
+    <div class="section-label">Simple & Fast</div>
+    <h2 class="section-title">How It <span>Works</span></h2>
+    <p class="section-desc">Book your tickets in just 4 easy steps</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-number">1</div>
+      <div class="step-title">Discover Events</div>
+      <div class="step-desc">Browse hundreds of events by category, city, or date that match your interests.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-number">2</div>
+      <div class="step-title">Choose Tickets</div>
+      <div class="step-desc">Select from VIP, General, or Student tickets with clear pricing and seat info.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-number">3</div>
+      <div class="step-title">Secure Payment</div>
+      <div class="step-desc">Pay safely via UPI, Credit/Debit Card, or Net Banking with instant confirmation.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-number">4</div>
+      <div class="step-title">Enjoy the Event</div>
+      <div class="step-desc">Get your e-ticket instantly and show up ready for an unforgettable experience.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-section">
+  <div class="cta-content">
+    <h2 class="cta-title">Ready to Host Your Own Event?</h2>
+    <p class="cta-desc">Join thousands of event organizers on EventPro. Manage registrations, sell tickets, and grow your audience — all in one place.</p>
+  </div>
+  <div class="cta-actions">
+    <a href="register.html" class="btn btn-white btn-lg">Get Started Free</a>
+    <a href="events.html" class="btn btn-outline-white btn-lg">Browse Events</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="font-size:1.6rem; text-decoration:none;">Event<span>Pro</span></a>
+      <p>India's leading event discovery and ticket booking platform. Connecting people with experiences that matter.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="events.html">All Events</a></li>
+        <li><a href="speakers.html">Speakers</a></li>
+        <li><a href="venues.html">Venues</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Account</h4>
+      <ul>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 EventPro. All rights reserved. Built with ❤️ for event lovers.</p>
+    <p>🇮🇳 Made in India</p>
+  </div>
+</footer>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<script src="../js/utils.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>
