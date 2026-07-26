@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Details – EventPro</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/events.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo">Event<span>Pro</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="events.html" class="active">Events</a></li>
+    <li><a href="speakers.html">Speakers</a></li>
+    <li><a href="venues.html">Venues</a></li>
+  </ul>
+  <div class="nav-actions">
+    <span class="nav-user-name" id="navUserName" style="display:none"></span>
+    <a href="login.html" class="btn btn-outline btn-sm" id="navLoginBtn">Log In</a>
+    <a href="register.html" class="btn btn-primary btn-sm" id="navRegisterBtn">Sign Up</a>
+    <a href="dashboard.html" class="btn btn-primary btn-sm" id="navDashBtn" style="display:none">Dashboard</a>
+    <button class="btn btn-outline btn-sm" id="navLogoutBtn" style="display:none" onclick="logout()">Logout</button>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-wrapper">
+  <!-- Loading -->
+  <div id="eventLoading" style="display:flex; align-items:center; justify-content:center; padding:100px;">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- EVENT DETAIL CONTENT -->
+  <div id="eventDetailContent" style="display:none;">
+    <!-- Hero -->
+    <div class="event-detail-hero">
+      <img id="detailHeroImg" src="" alt="Event" />
+      <div class="event-detail-hero-overlay"></div>
+      <div class="event-detail-hero-content">
+        <div>
+          <div id="detailCategory" class="badge badge-primary" style="margin-bottom:12px;"></div>
+          <h1 class="event-detail-title" id="detailTitle"></h1>
+          <div class="event-detail-meta">
+            <div class="event-meta-chip">📅 <span id="detailDate"></span></div>
+            <div class="event-meta-chip">⏰ <span id="detailTime"></span></div>
+            <div class="event-meta-chip">📍 <span id="detailLocation"></span></div>
+            <div class="event-meta-chip">🏛️ <span id="detailVenueName"></span></div>
+          </div>
+        </div>
+        <div id="detailStatus"></div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="event-detail-body">
+      <!-- INFO TABS -->
+      <div>
+        <div class="event-info-tabs">
+          <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('description', this)">About</button>
+            <button class="tab-btn" onclick="switchTab('speaker', this)">Speaker</button>
+            <button class="tab-btn" onclick="switchTab('venue', this)">Venue</button>
+          </div>
+
+          <div class="tab-content active" id="tab-description">
+            <p class="event-description" id="detailDescription"></p>
+          </div>
+
+          <div class="tab-content" id="tab-speaker">
+            <div class="speaker-card" id="speakerCard"></div>
+          </div>
+
+          <div class="tab-content" id="tab-venue">
+            <div class="venue-info-grid" id="venueInfoGrid"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOOKING CARD -->
+      <div>
+        <div class="booking-card">
+          <div class="booking-card-title" style="display:flex; align-items:center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px; color:#8b5cf6;"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M7 6v12M17 6v12"></path><path d="M12 6v12" stroke-dasharray="2 2"></path></svg> 
+            Book Tickets
+          </div>
+          <div class="ticket-selector" id="ticketSelector">
+            <div class="spinner"></div>
+          </div>
+          <div class="quantity-control">
+            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+            <span class="qty-val" id="qtyVal">1</span>
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
+          </div>
+          <div class="price-breakdown" id="priceBreakdown">
+            <div class="price-row"><span>Ticket Price</span><span id="pbTicketPrice">₹0</span></div>
+            <div class="price-row"><span>Quantity</span><span id="pbQty">×1</span></div>
+            <div class="price-row"><span>Subtotal</span><span id="pbSubtotal">₹0</span></div>
+            <div class="price-row"><span>Convenience Fee (2%)</span><span id="pbFee">₹0</span></div>
+            <div class="price-row"><span><strong>Total</strong></span><span id="pbTotal"><strong>₹0</strong></span></div>
+          </div>
+          <button class="btn btn-primary btn-full btn-lg" id="bookBtn" onclick="proceedToBook()">
+            Book Now →
+          </button>
+          <p style="text-align:center; color:var(--text-400); font-size:0.75rem; margin-top:12px;">🔒 Secure & Encrypted Payment</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="eventNotFound" style="display:none; text-align:center; padding:100px 20px;">
+    <div style="font-size:3rem; margin-bottom:16px;">😕</div>
+    <h2>Event Not Found</h2>
+    <p style="color:var(--text-300); margin:12px 0 24px;">This event might have been removed or doesn't exist.</p>
+    <a href="events.html" class="btn btn-primary">Browse Events</a>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="../js/utils.js"></script>
+<script src="../js/event-detail.js"></script>
+</body>
+</html>
