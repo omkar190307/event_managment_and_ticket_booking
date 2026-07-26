@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Events – EventPro</title>
+  <meta name="description" content="Browse and book tickets for hundreds of events across India on EventPro." />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/events.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo">Event<span>Pro</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="events.html" class="active">Events</a></li>
+    <li><a href="speakers.html">Speakers</a></li>
+    <li><a href="venues.html">Venues</a></li>
+  </ul>
+  <div class="nav-actions">
+    <span class="nav-user-name" id="navUserName" style="display:none"></span>
+    <a href="login.html" class="btn btn-outline btn-sm" id="navLoginBtn">Log In</a>
+    <a href="register.html" class="btn btn-primary btn-sm" id="navRegisterBtn">Sign Up</a>
+    <a href="dashboard.html" class="btn btn-primary btn-sm" id="navDashBtn" style="display:none">Dashboard</a>
+    <button class="btn btn-outline btn-sm" id="navLogoutBtn" style="display:none" onclick="logout()">Logout</button>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-wrapper">
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="section-label">🎯 All Events</div>
+    <h1 class="page-hero-title">Discover <span>Amazing</span> Events</h1>
+    <p class="page-hero-desc">Browse hundreds of events happening across India. Filter by category, city, and date.</p>
+  </div>
+
+  <!-- FILTERS BAR -->
+  <div class="filters-bar">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search events, speakers, venues..." oninput="filterEvents()" />
+    </div>
+    <div class="filter-chips" id="categoryChips">
+      <button class="chip active" onclick="setCategory('all', this)">All</button>
+      <button class="chip" onclick="setCategory('Technology', this)">💻 Tech</button>
+      <button class="chip" onclick="setCategory('Business', this)">📈 Business</button>
+      <button class="chip" onclick="setCategory('Workshop', this)">🔧 Workshop</button>
+      <button class="chip" onclick="setCategory('Leadership', this)">🏆 Leadership</button>
+      <button class="chip" onclick="setCategory('General', this)">✨ General</button>
+    </div>
+    <select class="sort-select" id="sortSelect" onchange="filterEvents()">
+      <option value="date_asc">Date: Soonest First</option>
+      <option value="date_desc">Date: Latest First</option>
+      <option value="price_asc">Price: Low to High</option>
+      <option value="price_desc">Price: High to Low</option>
+    </select>
+    <div class="view-toggle">
+      <button class="view-btn active" id="gridBtn" onclick="setView('grid')" title="Grid view">⊞</button>
+      <button class="view-btn" id="listBtn" onclick="setView('list')" title="List view">☰</button>
+    </div>
+  </div>
+
+  <!-- EVENTS CONTAINER -->
+  <div class="events-container">
+    <div class="events-header">
+      <div class="events-count">Showing <strong id="eventsShownCount">0</strong> events</div>
+    </div>
+    <div class="events-list" id="eventsList">
+      <div class="spinner"></div>
+    </div>
+    <div id="noEvents" style="display:none; text-align:center; padding:60px 20px;">
+      <div style="font-size:3rem; margin-bottom:16px;">😕</div>
+      <h3 style="margin-bottom:8px;">No events found</h3>
+      <p style="color:var(--text-300);">Try adjusting your search or filters</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-bottom">
+    <p>© 2026 EventPro. All rights reserved.</p>
+    <a href="index.html" style="color:var(--primary-light); text-decoration:none;">← Back to Home</a>
+  </div>
+</footer>
+
+<div id="toast-container"></div>
+<script src="../js/utils.js"></script>
+<script src="../js/events.js"></script>
+</body>
+</html>
