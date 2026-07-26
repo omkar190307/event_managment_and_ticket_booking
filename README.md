@@ -71,11 +71,6 @@ frontend/
 ## Usage
 To use the application, start the server and navigate to the frontend pages in your web browser. Users can register, log in, view events, and purchase tickets.
 
-## Screenshots
-![Screenshot](assets/screenshots/dashboard.png)
-
-## Demo
-[Watch Demo](assets/demo.gif)
 
 ## Future Improvements
 - Implement user roles and permissions for enhanced security
