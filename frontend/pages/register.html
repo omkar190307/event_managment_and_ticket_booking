@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register – EventPro</title>
+  <meta name="description" content="Create your EventPro account and start discovering amazing events." />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/auth.css" />
+</head>
+<body>
+
+<div class="auth-page">
+  <!-- LEFT PANEL -->
+  <div class="auth-left">
+    <div class="auth-brand">
+      <a href="index.html" class="auth-brand-logo">Event<span>Pro</span></a>
+      <h2>Join EventPro Today!</h2>
+      <p>Create your free account and get instant access to hundreds of events across India.</p>
+      <ul class="auth-feature-list">
+        <li>
+          <div class="auth-feature-icon">🚀</div>
+          <span>Free account — no credit card required</span>
+        </li>
+        <li>
+          <div class="auth-feature-icon">🎫</div>
+          <span>Book tickets in under 60 seconds</span>
+        </li>
+        <li>
+          <div class="auth-feature-icon">📧</div>
+          <span>Instant booking confirmation via email</span>
+        </li>
+        <li>
+          <div class="auth-feature-icon">🛡️</div>
+          <span>100% secure payments and data privacy</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="auth-right">
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <h1 class="auth-card-title">Create Account</h1>
+        <p class="auth-card-subtitle">Join 50,000+ event enthusiasts</p>
+      </div>
+
+      <form id="registerForm" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label class="form-label">I am registering as</label>
+          <div class="role-selector">
+            <div class="role-option">
+              <input type="radio" name="userType" id="roleUser" value="user" checked />
+              <label for="roleUser">
+                <span class="role-icon">🙋</span>
+                Attendee
+              </label>
+            </div>
+            <div class="role-option">
+              <input type="radio" name="userType" id="roleAdmin" value="admin" />
+              <label for="roleAdmin">
+                <span class="role-icon">🏢</span>
+                Organizer
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="regName">Full Name</label>
+          <input type="text" id="regName" class="form-control" placeholder="Your full name" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regEmail">Email Address</label>
+          <input type="email" id="regEmail" class="form-control" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regPassword">Password</label>
+          <div class="password-toggle">
+            <input type="password" id="regPassword" class="form-control" placeholder="Min. 8 characters" required minlength="8" />
+            <button type="button" class="toggle-btn" onclick="togglePassword('regPassword', this)">👁️</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regConfirm">Confirm Password</label>
+          <div class="password-toggle">
+            <input type="password" id="regConfirm" class="form-control" placeholder="Repeat your password" required />
+            <button type="button" class="toggle-btn" onclick="togglePassword('regConfirm', this)">👁️</button>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:24px;">
+          <label class="checkbox-label">
+            <input type="checkbox" id="agreeTerms" required />
+            I agree to the <a href="#" class="forgot-link">Terms of Service</a> and <a href="#" class="forgot-link">Privacy Policy</a>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full btn-lg" id="registerBtn">
+          Create Account 🎉
+        </button>
+      </form>
+
+      <div class="divider"></div>
+      <div class="auth-switch">
+        Already have an account? <a href="login.html">Sign in →</a>
+      </div>
+      <div class="auth-switch" style="margin-top:10px;">
+        <a href="index.html">← Back to Home</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="../js/utils.js"></script>
+<script src="../js/auth.js"></script>
+</body>
+</html>
