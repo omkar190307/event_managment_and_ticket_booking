@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EventPro – Sign In / Sign Up</title>
+  <meta name="description" content="Login or create your EventPro account to book event tickets."/>
+  <link rel="stylesheet" href="../css/auth.css"/>
+</head>
+<body>
+
+<div class="auth-wrap">
+
+  <!-- ══ LEFT PANEL ══ -->
+  <div class="auth-left">
+    <div class="auth-left-bg">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+      <div class="orb orb3"></div>
+    </div>
+
+    <!-- Floating stat cards -->
+    <div class="float-cards">
+      <div class="float-card fc1">
+        <div class="fc-label">🎟 Tickets Sold Today</div>
+        <div class="fc-val">+1,284</div>
+      </div>
+      <div class="float-card fc2">
+        <div class="fc-label">⭐ Avg. Rating</div>
+        <div class="fc-val">4.9 / 5.0</div>
+      </div>
+      <div class="float-card fc3">
+        <div class="fc-label">📍 Active Events</div>
+        <div class="fc-val">48 Live Now</div>
+      </div>
+    </div>
+
+    <a href="index.html" class="brand-logo">Event<span>Pro</span></a>
+    <h2 class="left-tagline">India's #1<br><span>Event Platform</span></h2>
+    <p class="left-sub">Discover concerts, tech summits, workshops and more. Book tickets in seconds, securely.</p>
+
+    <div class="features">
+      <div class="feat-item"><div class="feat-icon">🎫</div><span class="feat-text">Book tickets in under 60 seconds</span></div>
+      <div class="feat-item"><div class="feat-icon">🛡️</div><span class="feat-text">100% secure & encrypted payments</span></div>
+      <div class="feat-item"><div class="feat-icon">📧</div><span class="feat-text">Instant confirmation to your email</span></div>
+      <div class="feat-item"><div class="feat-icon">📱</div><span class="feat-text">Login with email or mobile number</span></div>
+    </div>
+  </div>
+
+  <!-- ══ RIGHT PANEL ══ -->
+  <div class="auth-right">
+    <div class="auth-box">
+
+      <!-- Tab switcher -->
+      <div class="tab-switch">
+        <button id="tabSignIn" class="active" onclick="switchTab('signin')">Sign In</button>
+        <button id="tabSignUp" onclick="switchTab('signup')">Sign Up</button>
+      </div>
+
+      <!-- ── SIGN IN PANEL ── -->
+      <div class="form-panel active" id="panelSignIn">
+        <h1 class="form-title">Welcome back 👋</h1>
+        <p class="form-sub">Sign in with your email or mobile number</p>
+
+        <div class="alert-banner" id="siAlert"></div>
+
+        <form id="signInForm" onsubmit="handleSignIn(event)" novalidate>
+
+          <div class="inp-group">
+            <label class="inp-label" for="siIdentifier">Email or Mobile Number</label>
+            <div class="inp-wrap">
+              <span class="inp-icon">📧</span>
+              <input type="text" id="siIdentifier" placeholder="you@example.com or 9876543210" autocomplete="username"/>
+            </div>
+            <div class="err-msg" id="siIdentifierErr">Please enter a valid email or 10-digit mobile number.</div>
+          </div>
+
+          <div class="inp-group">
+            <label class="inp-label" for="siPassword">Password</label>
+            <div class="inp-wrap">
+              <span class="inp-icon">🔒</span>
+              <input type="password" id="siPassword" placeholder="Enter your password" autocomplete="current-password"/>
+              <button type="button" class="eye-btn" onclick="toggleEye('siPassword', this)">👁️</button>
+            </div>
+            <div class="err-msg" id="siPasswordErr">Password cannot be empty.</div>
+          </div>
+
+          <div class="rf-row">
+            <label class="chk-label">
+              <input type="checkbox" id="rememberMe"/> Remember me
+            </label>
+            <a href="#" class="forgot-lnk">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn-submit" id="signInBtn">
+            <div class="spinner-sm"></div>
+            <span class="btn-text">Sign In →</span>
+          </button>
+        </form>
+
+
+        <div class="secure-note">🔒 256-bit SSL encrypted · Your data is safe</div>
+      </div>
+
+      <!-- ── SIGN UP PANEL ── -->
+      <div class="form-panel" id="panelSignUp">
+        <h1 class="form-title">Join EventPro 🎉</h1>
+        <p class="form-sub">Create your free account in seconds</p>
+
+        <div class="alert-banner" id="suAlert"></div>
+
+        <!-- Role selector -->
+        <label class="inp-label" style="margin-bottom:8px;">I am signing up as</label>
+        <div class="role-row">
+          <div class="role-card">
+            <input type="radio" name="userType" id="roleAttendee" value="user" checked/>
+            <label for="roleAttendee"><span class="r-icon">🙋</span>Attendee</label>
+          </div>
+          <div class="role-card">
+            <input type="radio" name="userType" id="roleOrganizer" value="admin"/>
+            <label for="roleOrganizer"><span class="r-icon">🏢</span>Organizer</label>
+          </div>
+        </div>
+
+        <form id="signUpForm" onsubmit="handleSignUp(event)" novalidate>
+
+          <div class="inp-group">
+            <label class="inp-label" for="suName">Full Name</label>
+            <div class="inp-wrap">
+              <span class="inp-icon">👤</span>
+              <input type="text" id="suName" placeholder="Rahul Sharma" autocomplete="name"/>
+            </div>
+            <div class="err-msg" id="suNameErr">Name must be at least 2 characters.</div>
+          </div>
+
+          <div class="inp-row">
+            <div class="inp-group">
+              <label class="inp-label" for="suEmail">Email Address</label>
+              <div class="inp-wrap">
+                <span class="inp-icon">📧</span>
+                <input type="email" id="suEmail" placeholder="you@example.com" autocomplete="email"/>
+              </div>
+              <div class="err-msg" id="suEmailErr">Enter a valid email address.</div>
+            </div>
+            <div class="inp-group">
+              <label class="inp-label" for="suMobile">Mobile Number</label>
+              <div class="inp-wrap">
+                <span class="inp-icon">📱</span>
+                <input type="tel" id="suMobile" placeholder="9876543210" maxlength="10"/>
+              </div>
+              <div class="err-msg" id="suMobileErr">Enter a valid 10-digit mobile number.</div>
+            </div>
+          </div>
+
+          <div class="inp-group">
+            <label class="inp-label" for="suPassword">Password</label>
+            <div class="inp-wrap">
+              <span class="inp-icon">🔒</span>
+              <input type="password" id="suPassword" placeholder="Min. 8 characters" autocomplete="new-password" oninput="checkStrength(this.value)"/>
+              <button type="button" class="eye-btn" onclick="toggleEye('suPassword', this)">👁️</button>
+            </div>
+            <div class="pw-strength">
+              <div class="pw-bars">
+                <div class="pw-bar" id="bar1"></div>
+                <div class="pw-bar" id="bar2"></div>
+                <div class="pw-bar" id="bar3"></div>
+                <div class="pw-bar" id="bar4"></div>
+              </div>
+              <div class="pw-label" id="pwLabel">Enter a password</div>
+            </div>
+            <div class="err-msg" id="suPasswordErr">Password must be at least 8 characters.</div>
+          </div>
+
+          <div class="inp-group">
+            <label class="inp-label" for="suConfirm">Confirm Password</label>
+            <div class="inp-wrap">
+              <span class="inp-icon">🔐</span>
+              <input type="password" id="suConfirm" placeholder="Repeat password" autocomplete="new-password"/>
+              <button type="button" class="eye-btn" onclick="toggleEye('suConfirm', this)">👁️</button>
+            </div>
+            <div class="err-msg" id="suConfirmErr">Passwords do not match.</div>
+          </div>
+
+          <div class="inp-group" style="margin-bottom:22px;">
+            <label class="chk-label">
+              <input type="checkbox" id="agreeTerms"/>
+              I agree to the <a href="#" class="forgot-lnk">Terms of Service</a> &amp; <a href="#" class="forgot-lnk">Privacy Policy</a>
+            </label>
+            <div class="err-msg" id="suTermsErr">You must agree to the terms.</div>
+          </div>
+
+          <button type="submit" class="btn-submit" id="signUpBtn">
+            <div class="spinner-sm"></div>
+            <span class="btn-text">Create Free Account 🚀</span>
+          </button>
+        </form>
+
+        <div class="switch-lnk">
+          Already have an account? <button onclick="switchTab('signin')">Sign in →</button>
+        </div>
+        <div class="secure-note">🔒 256-bit SSL encrypted · Your data is safe</div>
+      </div>
+
+    </div><!-- /auth-box -->
+  </div><!-- /auth-right -->
+</div><!-- /auth-wrap -->
+
+<div id="toast-box"></div>
+
+<script>
+const API = 'http://localhost:3000/api';
+
+/* ── Tab switch ── */
+function switchTab(tab) {
+  const isSignIn = tab === 'signin';
+  document.getElementById('panelSignIn').classList.toggle('active', isSignIn);
+  document.getElementById('panelSignUp').classList.toggle('active', !isSignIn);
+  document.getElementById('tabSignIn').classList.toggle('active', isSignIn);
+  document.getElementById('tabSignUp').classList.toggle('active', !isSignIn);
+  clearAlerts();
+}
+
+/* ── Eye toggle ── */
+function toggleEye(id, btn) {
+  const inp = document.getElementById(id);
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  btn.textContent = inp.type === 'password' ? '👁️' : '🙈';
+}
+
+/* ── Password strength ── */
+function checkStrength(val) {
+  const bars  = [document.getElementById('bar1'), document.getElementById('bar2'), document.getElementById('bar3'), document.getElementById('bar4')];
+  const label = document.getElementById('pwLabel');
+  bars.forEach(b => { b.className = 'pw-bar'; });
+  let score = 0;
+  if (val.length >= 8)  score++;
+  if (/[A-Z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+  const cls = score <= 1 ? 'weak' : score === 2 ? 'medium' : 'strong';
+  const lbl = score <= 1 ? 'Weak – add uppercase, numbers & symbols' : score === 2 ? 'Medium – getting better!' : score === 3 ? 'Good – almost there' : 'Strong password ✓';
+  for (let i = 0; i < score; i++) bars[i].classList.add(cls);
+  label.textContent = val ? lbl : 'Enter a password';
+}
+
+/* ── Validators ── */
+function showErr(id, msg) {
+  const el = document.getElementById(id);
+  if (msg) { el.textContent = msg; el.classList.add('show'); }
+  else el.classList.remove('show');
+}
+function markInp(id, err) {
+  document.getElementById(id).classList.toggle('error', err);
+}
+function clearAlerts() {
+  ['siAlert','suAlert'].forEach(id => {
+    const el = document.getElementById(id);
+    el.className = 'alert-banner'; el.textContent = '';
+  });
+}
+function showAlert(id, type, msg) {
+  const el = document.getElementById(id);
+  el.className = `alert-banner ${type} show`;
+  el.innerHTML = (type === 'success' ? '✅ ' : '❌ ') + msg;
+}
+
+function isMobile(v) { return /^[6-9]\d{9}$/.test(v); }
+function isEmail(v)  { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+/* ── SIGN IN ── */
+async function handleSignIn(e) {
+  e.preventDefault();
+  const identifier = document.getElementById('siIdentifier').value.trim();
+  const password   = document.getElementById('siPassword').value;
+  let valid = true;
+
+  if (!identifier || (!isEmail(identifier) && !isMobile(identifier))) {
+    showErr('siIdentifierErr'); markInp('siIdentifier', true); valid = false;
+  } else { showErr('siIdentifierErr', ''); markInp('siIdentifier', false); }
+
+  if (!password) {
+    showErr('siPasswordErr'); markInp('siPassword', true); valid = false;
+  } else { showErr('siPasswordErr', ''); markInp('siPassword', false); }
+
+  if (!valid) return;
+
+  const btn = document.getElementById('signInBtn');
+  btn.disabled = true; btn.classList.add('loading');
+
+  try {
+    const res  = await fetch(`${API}/users/login`, {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify({ identifier, password })
+    });
+    const data = await res.json();
+
+    if (!res.ok) { showAlert('siAlert','error', data.error || 'Login failed.'); return; }
+
+    // Save to localStorage
+    localStorage.setItem('ep_token', data.token);
+    localStorage.setItem('ep_user',  JSON.stringify(data.user));
+
+    showAlert('siAlert','success', `Welcome back, ${data.user.name}! Redirecting…`);
+    toast('✅ Logged in successfully!', 's');
+
+    setTimeout(() => {
+      window.location.href = data.user.user_type === 'admin' ? 'dashboard.html?tab=admin' : 'dashboard.html';
+    }, 1200);
+  } catch {
+    showAlert('siAlert','error','Server is unreachable. Is the backend running?');
+  } finally {
+    btn.disabled = false; btn.classList.remove('loading');
+  }
+}
+
+/* ── SIGN UP ── */
+async function handleSignUp(e) {
+  e.preventDefault();
+  const name     = document.getElementById('suName').value.trim();
+  const email    = document.getElementById('suEmail').value.trim();
+  const mobile   = document.getElementById('suMobile').value.trim();
+  const password = document.getElementById('suPassword').value;
+  const confirm  = document.getElementById('suConfirm').value;
+  const terms    = document.getElementById('agreeTerms').checked;
+  const userType = document.querySelector('input[name="userType"]:checked').value;
+  let valid = true;
+
+  if (name.length < 2) { showErr('suNameErr','Name must be at least 2 characters.'); markInp('suName',true); valid=false; }
+  else { showErr('suNameErr',''); markInp('suName',false); }
+
+  if (!isEmail(email)) { showErr('suEmailErr','Enter a valid email address.'); markInp('suEmail',true); valid=false; }
+  else { showErr('suEmailErr',''); markInp('suEmail',false); }
+
+  if (mobile && !isMobile(mobile)) { showErr('suMobileErr','Enter a valid 10-digit mobile number.'); markInp('suMobile',true); valid=false; }
+  else { showErr('suMobileErr',''); markInp('suMobile',false); }
+
+  if (password.length < 8) { showErr('suPasswordErr','Password must be at least 8 characters.'); markInp('suPassword',true); valid=false; }
+  else { showErr('suPasswordErr',''); markInp('suPassword',false); }
+
+  if (password !== confirm) { showErr('suConfirmErr','Passwords do not match.'); markInp('suConfirm',true); valid=false; }
+  else { showErr('suConfirmErr',''); markInp('suConfirm',false); }
+
+  if (!terms) { showErr('suTermsErr','You must agree to the terms.'); valid=false; }
+  else showErr('suTermsErr','');
+
+  if (!valid) return;
+
+  const btn = document.getElementById('signUpBtn');
+  btn.disabled = true; btn.classList.add('loading');
+
+  try {
+    const res  = await fetch(`${API}/users/register`, {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify({ name, email, mobile: mobile || undefined, password, user_type: userType })
+    });
+    const data = await res.json();
+
+    if (!res.ok) { showAlert('suAlert','error', data.error || 'Registration failed.'); return; }
+
+    localStorage.setItem('ep_token', data.token);
+    localStorage.setItem('ep_user',  JSON.stringify(data.user));
+
+    showAlert('suAlert','success', `Account created! Welcome, ${data.user.name}! Redirecting…`);
+    toast('🎉 Account created successfully!', 's');
+
+    setTimeout(() => { window.location.href = 'dashboard.html'; }, 1400);
+  } catch {
+    showAlert('suAlert','error','Server is unreachable. Is the backend running?');
+  } finally {
+    btn.disabled = false; btn.classList.remove('loading');
+  }
+}
+
+/* ── Toast ── */
+function toast(msg, type='s') {
+  const box = document.getElementById('toast-box');
+  const t   = document.createElement('div');
+  t.className = `toast ${type}`; t.textContent = msg;
+  box.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+/* ── Auto-fill redirect if already logged in ── */
+(function() {
+  const user = localStorage.getItem('ep_user');
+  if (user) {
+    const u = JSON.parse(user);
+    // show option but don't force-redirect so user can still switch accounts
+    toast(`👋 Already signed in as ${u.name}`, 's');
+  }
+  // Read URL param ?tab=signup
+  if (new URLSearchParams(location.search).get('tab') === 'signup') switchTab('signup');
+})();
+</script>
+
+</body>
+</html>
