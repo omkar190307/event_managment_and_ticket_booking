@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard – EventPro</title>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/events.css"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo">Event<span>Pro</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="events.html">Events</a></li>
+  </ul>
+  <div class="nav-actions">
+    <span class="nav-user-name" id="navUserName"></span>
+    <button class="btn btn-outline btn-sm" id="navLogoutBtn" onclick="logout()">Logout</button>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page-wrapper">
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Main</div>
+        <ul class="sidebar-nav">
+          <li><a href="#" class="active" data-section="myOrders" onclick="showSection('myOrders');return false;"><span class="nav-icon">🎟️</span> My Tickets</a></li>
+          <li><a href="#" data-section="profile" onclick="showSection('profile');return false;"><span class="nav-icon">👤</span> Profile</a></li>
+          <li><a href="events.html"><span class="nav-icon">🔍</span> Browse Events</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-section hidden" id="adminNav">
+        <div class="sidebar-label">Admin Panel</div>
+        <ul class="sidebar-nav">
+          <li><a href="#" data-section="adminUsers"  onclick="showSection('adminUsers');return false;"><span class="nav-icon">👥</span> All Users</a></li>
+          <li><a href="#" data-section="adminEvents" onclick="showSection('adminEvents');return false;"><span class="nav-icon">📅</span> All Events</a></li>
+          <li><a href="#" data-section="adminOrders" onclick="showSection('adminOrders');return false;"><span class="nav-icon">📦</span> All Orders</a></li>
+        </ul>
+      </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+      <div class="dashboard-header">
+        <div class="dashboard-greeting">
+          <h2 id="dashGreeting">Hello 👋</h2>
+          <p id="dashRole" style="color:var(--text-300);font-size:0.875rem;margin-top:4px;"></p>
+        </div>
+        <a href="events.html" class="btn btn-primary">+ Book New Event</a>
+      </div>
+
+      <!-- STATS ROW (admin only) -->
+      <div class="stats-row" id="adminStats" style="display:none">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(108,61,229,0.15)">👥</div>
+          <div><div class="stat-value" id="totalUsers">—</div><div class="stat-label">Total Users</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(249,115,22,0.15)">📅</div>
+          <div><div class="stat-value" id="totalEvents">—</div><div class="stat-label">Events</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(16,185,129,0.15)">📦</div>
+          <div><div class="stat-value" id="totalOrders">—</div><div class="stat-label">Orders</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(59,130,246,0.15)">💰</div>
+          <div><div class="stat-value" id="totalRevenue">—</div><div class="stat-label">Revenue</div></div>
+        </div>
+      </div>
+
+      <!-- MY ORDERS -->
+      <div class="dash-section" id="myOrders">
+        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:20px;">🎟️ My Booked Tickets</h3>
+        <div class="orders-list" id="ordersList"><div class="spinner"></div></div>
+      </div>
+
+      <!-- PROFILE -->
+      <div class="dash-section" id="profile" style="display:none">
+        <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:20px;">👤 My Profile</h3>
+        <div id="profileInfo"></div>
+      </div>
+
+      <!-- ADMIN: USERS -->
+      <div class="dash-section" id="adminUsers" style="display:none">
+        <div class="admin-table-actions">
+          <h3 class="admin-panel-title">👥 All Users</h3>
+        </div>
+        <div id="adminUsersList"><div class="spinner"></div></div>
+      </div>
+
+      <!-- ADMIN: EVENTS -->
+      <div class="dash-section" id="adminEvents" style="display:none">
+        <div class="admin-table-actions">
+          <h3 class="admin-panel-title">📅 All Events</h3>
+          <a href="events.html" class="btn btn-primary btn-sm">View Public Page</a>
+        </div>
+        <div id="adminEventsList"><div class="spinner"></div></div>
+      </div>
+
+      <!-- ADMIN: ORDERS -->
+      <div class="dash-section" id="adminOrders" style="display:none">
+        <div class="admin-table-actions">
+          <h3 class="admin-panel-title">📦 All Orders</h3>
+        </div>
+        <div id="adminOrdersList"><div class="spinner"></div></div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="../js/utils.js"></script>
+<script src="../js/dashboard.js"></script>
+<script>
+  // Show admin stats if admin
+  document.addEventListener('DOMContentLoaded', () => {
+    const u = getUser();
+    if (u && u.user_type === 'admin') {
+      document.getElementById('adminStats').style.display = 'grid';
+    }
+  });
+</script>
+</body>
+</html>
