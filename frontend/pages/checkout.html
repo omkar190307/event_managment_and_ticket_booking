@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout – EventPro</title>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/events.css"/>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo">Event<span>Pro</span></a>
+  <div class="nav-actions">
+    <span class="nav-user-name" id="navUserName"></span>
+    <button class="btn btn-outline btn-sm" id="navLogoutBtn" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+  <div style="padding:40px 5%;">
+    <a href="javascript:history.back()" class="btn btn-outline btn-sm" style="margin-bottom:28px;">← Back</a>
+
+    <!-- Steps -->
+    <div class="checkout-steps" style="margin-bottom:40px;">
+      <div class="checkout-step active" id="step1">
+        <div class="step-dot">1</div><span>Details</span>
+      </div>
+      <div class="step-line" id="line1"></div>
+      <div class="checkout-step" id="step2">
+        <div class="step-dot">2</div><span>Payment</span>
+      </div>
+      <div class="step-line" id="line2"></div>
+      <div class="checkout-step" id="step3">
+        <div class="step-dot">3</div><span>Confirm</span>
+      </div>
+    </div>
+
+    <div class="checkout-layout">
+      <!-- LEFT: Form -->
+      <div>
+        <!-- Step 1: Attendee Info -->
+        <div id="formStep1">
+          <div class="glass-card" style="padding:28px;margin-bottom:20px;">
+            <h3 style="font-weight:700;margin-bottom:20px;">👤 Attendee Information</h3>
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input class="form-control" id="coName" placeholder="Enter your name"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input class="form-control" id="coEmail" type="email" placeholder="you@example.com"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Mobile Number</label>
+              <input class="form-control" id="coMobile" type="tel" placeholder="9876543210" maxlength="10"/>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-lg btn-full" onclick="goToPayment()">Continue to Payment →</button>
+        </div>
+
+        <!-- Step 2: Payment -->
+        <div id="formStep2" style="display:none;">
+          <div class="glass-card" style="padding:28px;margin-bottom:20px;">
+            <h3 style="font-weight:700;margin-bottom:20px;">💳 Select Payment Method</h3>
+            <div class="payment-methods">
+              <div class="payment-method-card selected" onclick="selectPay(this,'UPI')" id="pm-upi">
+                <div class="payment-method-icon">📱</div>
+                <div class="payment-method-name">UPI</div>
+              </div>
+              <div class="payment-method-card" onclick="selectPay(this,'Credit Card')" id="pm-cc">
+                <div class="payment-method-icon">💳</div>
+                <div class="payment-method-name">Credit Card</div>
+              </div>
+              <div class="payment-method-card" onclick="selectPay(this,'Debit Card')" id="pm-dc">
+                <div class="payment-method-icon">🏦</div>
+                <div class="payment-method-name">Debit Card</div>
+              </div>
+              <div class="payment-method-card" onclick="selectPay(this,'Net Banking')" id="pm-nb">
+                <div class="payment-method-icon">🌐</div>
+                <div class="payment-method-name">Net Banking</div>
+              </div>
+            </div>
+
+            <div id="upiForm">
+              <div class="form-group" style="margin-top:16px;">
+                <label class="form-label">UPI ID</label>
+                <input class="form-control" id="upiId" placeholder="yourname@upi"/>
+              </div>
+            </div>
+            <div id="cardForm" style="display:none;">
+              <div class="form-group" style="margin-top:16px;">
+                <label class="form-label">Card Number</label>
+                <input class="form-control" id="cardNum" placeholder="1234 5678 9012 3456" maxlength="19"/>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <div class="form-group">
+                  <label class="form-label">Expiry (MM/YY)</label>
+                  <input class="form-control" id="cardExp" placeholder="12/27" maxlength="5"/>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">CVV</label>
+                  <input class="form-control" id="cardCvv" placeholder="123" maxlength="3" type="password"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;">
+            <button class="btn btn-outline btn-lg" onclick="goBack()">← Back</button>
+            <button class="btn btn-primary btn-lg" style="flex:1;" id="payBtn" onclick="processPayment()">
+              Pay <span id="payAmount"></span> →
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Success -->
+        <div id="formStep3" style="display:none;text-align:center;padding:40px 20px;">
+          <div style="font-size:4rem;margin-bottom:16px;">🎉</div>
+          <h2 style="font-weight:800;margin-bottom:8px;">Booking Confirmed!</h2>
+          <p style="color:var(--text-300);margin-bottom:8px;">Your tickets have been booked successfully.</p>
+          <p style="color:var(--text-400);font-size:0.85rem;" id="txnId"></p>
+          <div style="display:flex;gap:12px;justify-content:center;margin-top:28px;flex-wrap:wrap;">
+            <a href="dashboard.html" class="btn btn-primary btn-lg">View My Tickets</a>
+            <a href="events.html" class="btn btn-outline btn-lg">Browse More Events</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Order Summary -->
+      <div>
+        <div class="order-summary-card">
+          <div class="order-summary-title">📋 Order Summary</div>
+          <div id="summaryEventImgContainer" style="display:none; margin-bottom:16px; border-radius:8px; overflow:hidden; aspect-ratio:16/9; background:#1a0838;">
+            <img id="summaryEventImg" src="" alt="Event Image" style="width:100%; height:100%; object-fit:cover;" />
+          </div>
+          <div id="summaryEventName" style="font-weight:700;margin-bottom:16px;">Loading…</div>
+          <div class="summary-ticket">
+            <span id="summaryTicketType">—</span>
+            <span id="summaryTicketPrice">—</span>
+          </div>
+          <div class="summary-ticket">
+            <span>Quantity</span>
+            <span id="summaryQty">×1</span>
+          </div>
+          <div class="summary-ticket">
+            <span>Subtotal</span>
+            <span id="summarySubtotal">—</span>
+          </div>
+          <div class="summary-ticket">
+            <span>Convenience Fee (2%)</span>
+            <span id="summaryFee">—</span>
+          </div>
+          <div class="summary-total">
+            <span>Total</span>
+            <span id="summaryTotal">—</span>
+          </div>
+          <div style="margin-top:20px;padding:14px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:10px;font-size:0.8rem;color:var(--success);">
+            🔒 Payment secured by 256-bit SSL encryption
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="../js/utils.js"></script>
+<script>
+  const params    = new URLSearchParams(location.search);
+  const eventId   = params.get('eventId');
+  const ticketId  = params.get('ticketId');
+  const ticketType= params.get('type');
+  const price     = parseFloat(params.get('price') || 0);
+  const qty       = parseInt(params.get('qty') || 1);
+  let   payMethod = 'UPI';
+  let   orderId   = null;
+  const sub       = price * qty;
+  const fee       = Math.round(sub * 0.02);
+  const total     = sub + fee;
+
+  // Pre-fill user
+  const u = getUser();
+  if (u) {
+    document.getElementById('coName').value   = u.name   || '';
+    document.getElementById('coEmail').value  = u.email  || '';
+    document.getElementById('coMobile').value = u.mobile || '';
+  }
+
+  // Fill summary
+  async function fillSummary() {
+    document.getElementById('summaryTicketType').textContent = `${ticketType} Ticket`;
+    document.getElementById('summaryTicketPrice').textContent = formatCurrency(price);
+    document.getElementById('summaryQty').textContent = `×${qty}`;
+    document.getElementById('summarySubtotal').textContent = formatCurrency(sub);
+    document.getElementById('summaryFee').textContent = formatCurrency(fee);
+    document.getElementById('summaryTotal').textContent = formatCurrency(total);
+    document.getElementById('payAmount').textContent = formatCurrency(total);
+    try {
+      const ev = await apiFetch(`/events/${eventId}`);
+      document.getElementById('summaryEventName').textContent = ev.Name;
+      if (ev.Image_URL) {
+        document.getElementById('summaryEventImg').src = ev.Image_URL;
+        document.getElementById('summaryEventImgContainer').style.display = 'block';
+      }
+    } catch { document.getElementById('summaryEventName').textContent = 'Event'; }
+  }
+  fillSummary();
+
+  function selectPay(el, method) {
+    payMethod = method;
+    document.querySelectorAll('.payment-method-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('upiForm').style.display  = method === 'UPI' ? 'block' : 'none';
+    document.getElementById('cardForm').style.display = (method === 'Credit Card' || method === 'Debit Card') ? 'block' : 'none';
+  }
+
+  function setStep(n) {
+    [1,2,3].forEach(i => {
+      document.getElementById(`step${i}`).className = `checkout-step${i <= n ? ' active' : ''}${i < n ? ' done' : ''}`;
+    });
+    [1,2].forEach(i => { document.getElementById(`line${i}`).className = `step-line${i < n ? ' done' : ''}`; });
+  }
+
+  function goToPayment() {
+    if (!document.getElementById('coName').value.trim()) { showToast('Enter your name','error'); return; }
+    if (!document.getElementById('coEmail').value.trim()) { showToast('Enter your email','error'); return; }
+    document.getElementById('formStep1').style.display = 'none';
+    document.getElementById('formStep2').style.display = 'block';
+    setStep(2);
+  }
+
+  function goBack() {
+    document.getElementById('formStep2').style.display = 'none';
+    document.getElementById('formStep1').style.display = 'block';
+    setStep(1);
+  }
+
+  async function processPayment() {
+    if (!isLoggedIn()) { location.href='login.html'; return; }
+    const btn = document.getElementById('payBtn');
+    btn.disabled = true; btn.textContent = 'Processing…';
+    try {
+      // Fetch available tickets to get correct quantity of IDs
+      const availableTickets = await apiFetch(`/tickets/available/${eventId}`);
+      const matchingTickets = availableTickets.filter(t => t.Type === ticketType);
+      
+      if (matchingTickets.length < qty) {
+        throw new Error(`Only ${matchingTickets.length} tickets available for this type.`);
+      }
+      
+      const ticketIdsToBook = matchingTickets.slice(0, qty).map(t => t.Ticket_ID);
+
+      // Create order
+      const orderRes = await apiFetch('/orders', {
+        method:'POST',
+        body: JSON.stringify({ user_id: u.id, ticket_ids: ticketIdsToBook })
+      });
+      orderId = orderRes.orderId;
+
+      // Process payment
+      const payRes = await apiFetch('/payments', {
+        method:'POST',
+        body: JSON.stringify({ order_id: orderId, payment_method: payMethod })
+      });
+
+      document.getElementById('formStep2').style.display = 'none';
+      document.getElementById('formStep3').style.display = 'block';
+      document.getElementById('txnId').textContent = `Transaction ID: ${payRes.transaction_id}`;
+      setStep(3);
+      showToast('🎉 Booking confirmed!','success');
+    } catch(e) {
+      showToast(e.message || 'Payment failed. Try again.','error');
+      btn.disabled = false; btn.textContent = `Pay ${formatCurrency(total)} →`;
+    }
+  }
+</script>
+</body>
+</html>
